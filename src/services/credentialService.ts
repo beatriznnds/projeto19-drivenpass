@@ -3,7 +3,7 @@ import * as cryptrUtil from "../utils/cryptrUtils";
 import { TypeInsertCredentialData } from "../types/credentialTypes";
 import { users } from "@prisma/client";
 
-export async function checkTitle(
+export async function createCredential(
   credential: TypeInsertCredentialData,
   userId: number
 ) {
@@ -14,12 +14,6 @@ export async function checkTitle(
   if (invalidTitle) {
     throw { type: "Conflict", message: `This title is already in use!` };
   }
-}
-
-export async function createCredential(
-  credential: TypeInsertCredentialData,
-  userId: number
-) {
   const encryptedPassword = cryptrUtil.encrypt(credential.password);
   const newCredential = {
     url: credential.url,
