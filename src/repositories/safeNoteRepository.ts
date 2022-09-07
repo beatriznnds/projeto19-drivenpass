@@ -1,5 +1,4 @@
 import { prisma } from "../database";
-import { getSafeNoteById } from "../services/safeNoteService";
 import { TypeSafeNotesData } from "../types/safeNoteTypes";
 
 export async function isTitleValid(userId: number, title: string) {
