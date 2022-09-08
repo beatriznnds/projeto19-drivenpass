@@ -21,3 +21,10 @@ export async function getCardById(req: Request, res: Response) {
   const result = await cardService.getCardById(userId, id);
   res.status(200).send({ result });
 }
+
+export async function deleteCard(req: Request, res: Response) {
+  const userId = res.locals.userId;
+  const id = Number(req.params.id);
+  await cardService.deleteCard(userId, id);
+  res.status(201).send({ message: `Card deleted!` });
+}

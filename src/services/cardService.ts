@@ -1,6 +1,7 @@
 import * as cardRepo from "../repositories/cardRepository";
 import { TypeInsertCardData } from "../types/cardTypes";
 import { encrypt, decrypt } from "../utils/cryptrUtils";
+import { users } from "@prisma/client";
 
 export async function createCard(card: TypeInsertCardData, userId: number) {
   const invalidTitle = await cardRepo.isTitleValid(userId, card.title);
@@ -30,4 +31,18 @@ export async function getCardById(userId: number, cardId: number) {
     throw { type: "Not Found", message: `No cards found!` };
   }
   return { ...card, password: decrypt(card.password) };
+}
+
+export async function deleteCard(user: users, cardId: number) {
+  const card = await cardRepo.findById(cardId);
+  const isCardFromUser = await cardRepo.getCardById(user.id, cardId);
+  if (!card) {
+    throw { type: "Not Found", message: `No cards found!` };
+  }
+  if (card.userId !== isCardFromUser?.userId) {
+    throw {
+      type: "Unauthorized",
+      message: `You are not allowed to delete this card!`,
+    };
+  }
 }

@@ -16,3 +16,11 @@ export async function getAllCards(userId: number) {
 export async function getCardById(userId: number, cardId: number) {
   return await prisma.cards.findFirst({ where: { userId, id: cardId } });
 }
+
+export async function deleteCard(cardId: number) {
+  return await prisma.cards.delete({ where: { id: cardId } });
+}
+
+export async function findById(cardId: number) {
+  return await prisma.cards.findFirst({ where: { id: cardId } });
+}
