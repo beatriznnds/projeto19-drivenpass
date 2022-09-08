@@ -13,4 +13,8 @@ wifiRouter.post(
   wifiController.createWifi
 );
 
+wifiRouter.get("/wifis", checkValidToken, wifiController.getAll);
+
+wifiRouter.get("/wifis/:id", checkValidToken, wifiController.getWifiById);
+
 export default wifiRouter;

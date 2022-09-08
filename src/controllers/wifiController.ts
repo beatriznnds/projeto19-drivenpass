@@ -8,3 +8,16 @@ export async function createWifi(req: Request, res: Response) {
   await wifiService.createWifi(wifi, userId);
   res.status(201).send({ message: `Wifi created!` });
 }
+
+export async function getAll(req: Request, res: Response) {
+  const userId = res.locals.userId;
+  const result = await wifiService.getAll(userId);
+  res.status(200).send({ result });
+}
+
+export async function getWifiById(req: Request, res: Response) {
+  const userId = res.locals.userId;
+  const id = Number(req.params.id);
+  const result = await wifiService.getWifiById(userId, id);
+  res.status(200).send({ result });
+}
