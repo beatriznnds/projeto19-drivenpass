@@ -12,3 +12,11 @@ export async function getAll(userId: number) {
 export async function getWifiById(userId: number, wifiId: number) {
   return await prisma.wifis.findFirst({ where: { userId, id: wifiId } });
 }
+
+export async function deleteWifi(wifiId: number) {
+  return await prisma.wifis.delete({ where: { id: wifiId } });
+}
+
+export async function findById(wifiId: number) {
+  return await prisma.wifis.findFirst({ where: { id: wifiId } });
+}

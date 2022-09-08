@@ -21,3 +21,10 @@ export async function getWifiById(req: Request, res: Response) {
   const result = await wifiService.getWifiById(userId, id);
   res.status(200).send({ result });
 }
+
+export async function deleteWifi(req: Request, res: Response) {
+  const userId = res.locals.userId;
+  const id = Number(req.params.id);
+  await wifiService.deleteWifi(userId, id);
+  res.status(201).send({ message: `Wifi deleted!` });
+}
