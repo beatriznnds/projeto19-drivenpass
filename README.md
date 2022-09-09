@@ -3,7 +3,7 @@
 <h2 align=center> WHAT IS IT? </h2>
 <p align=center> This app is a password management service that stores sensitive information in an encrypted vault.</p>
 
-<h2 align=center> HOW THE API WORKS? </h2>
+<h2 align=center> HOW DOES THE API WORKS? </h2>
 
 ```
 TO SIGN UP:
