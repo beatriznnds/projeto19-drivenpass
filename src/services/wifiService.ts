@@ -28,16 +28,16 @@ export async function getWifiById(userId: number, wifiId: number) {
   return { ...wifi, password: decrypt(wifi.password) };
 }
 
-export async function deleteWifi(wifis: wifis, wifiId: number) {
+export async function deleteWifi(userId: number, wifiId: number) {
   const wifi = await wifiRepo.findById(wifiId);
   if (!wifi) {
     throw { type: "Not Found", message: `No wifis found!` };
   }
-  const validUser = await wifiRepo.getWifiById(wifis.id, wifiId);
-  if (wifi.userId !== validUser?.userId) {
+  if (wifi.userId !== userId) {
     throw {
       type: "Unauthorized",
       message: `You are not allowed to delete this credential!`,
     };
   }
+  await wifiRepo.deleteWifi(wifiId);
 }

@@ -33,16 +33,16 @@ export async function getSafeNoteById(userId: number, safeNoteId: number) {
   return safeNotes;
 }
 
-export async function deleteSafeNote(safeNote: safeNotes, safeNoteId: number) {
+export async function deleteSafeNote(userId: number, safeNoteId: number) {
   const safeNotes = await safeNoteRepo.findById(safeNoteId);
   if (!safeNotes) {
     throw { type: "Not Found", message: `No safe note found!` };
   }
-  const validSafeNote = await safeNoteRepo.getSafeNote(safeNote.id, safeNoteId);
-  if (safeNotes?.userId !== validSafeNote?.userId) {
+  if (safeNotes?.userId !== userId) {
     throw {
       type: "Unauthorized",
       message: `You are not allowed to delete this safe note!`,
     };
   }
+  await safeNoteRepo.deleteSafeNote(safeNoteId);
 }

@@ -47,19 +47,16 @@ export async function getCredentialById(userId: number, credentialId: number) {
   return { ...credential, password: cryptrUtil.decrypt(credential.password) };
 }
 
-export async function deleteCredential(user: users, credentialId: number) {
+export async function deleteCredential(userId: number, credentialId: number) {
   const credential = await credentialRepository.findById(credentialId);
-  const validUser = await credentialRepository.getCredential(
-    user.id,
-    credentialId
-  );
   if (!credential) {
     throw { type: "Not Found", message: `No credentials found!` };
   }
-  if (credential.userId !== validUser?.userId) {
+  if (credential.userId !== userId) {
     throw {
       type: "Unauthorized",
       message: `You are not allowed to delete this credential!`,
     };
   }
+  await credentialRepository.deleteCredential(credentialId);
 }

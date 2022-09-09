@@ -33,16 +33,16 @@ export async function getCardById(userId: number, cardId: number) {
   return { ...card, password: decrypt(card.password) };
 }
 
-export async function deleteCard(user: users, cardId: number) {
+export async function deleteCard(userId: number, cardId: number) {
   const card = await cardRepo.findById(cardId);
-  const isCardFromUser = await cardRepo.getCardById(user.id, cardId);
   if (!card) {
     throw { type: "Not Found", message: `No cards found!` };
   }
-  if (card.userId !== isCardFromUser?.userId) {
+  if (card.userId !== userId) {
     throw {
       type: "Unauthorized",
       message: `You are not allowed to delete this card!`,
     };
   }
+  await cardRepo.deleteCard(cardId);
 }
